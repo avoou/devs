@@ -2,6 +2,29 @@
 
 {% block content %}
 
-<h1>777PROJECTS.html</h1>
+<h1>
+    Project name is: {{ project_name }}
+</h1>
+
+{% if age >= 18 %}
+    <h3>You are adult</h3>
+{% else %}
+    <h3>You are not adult</h3>
+{% endif %}
+
+<p>Projects list:</p>
+<ul>
+
+    {% for project in projectsList %}
+
+        <li>
+            <a href=" {% url 'project' project.id %} ">{{project.title}}</a> <br>
+            Description: {{project.description}} <br>
+        </li>
+
+    {% endfor %}
+
+</ul>
+
 
 {% endblock content %}
