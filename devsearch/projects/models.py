@@ -1,6 +1,12 @@
 from django.db import models
 import uuid
 
+
+#project = Project.objects.get(title='Telegram')
+#project.review_set.all() - for one to many relationship
+#project.tag.all() - for many to many
+
+
 class Project(models.Model):
     tag = models.ManyToManyField('Tag', blank=True)
     vote_total = models.IntegerField(default=0, null=True, blank=True)
@@ -38,7 +44,7 @@ class Review(models.Model):
     )
 
     def __str__(self) -> str:
-        return self.value
+        return f'{self.project}|{self.created}|{self.value}' 
     
 
 class Tag(models.Model):

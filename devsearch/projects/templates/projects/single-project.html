@@ -7,5 +7,18 @@
     Project id: {{specific_project.id}} <br>
     Project title: {{specific_project.title}} <br>
     Description: {{specific_project.description}} <br>
+    Tags: 
+    <ul>
+        {%for tag in tags%}
+            <li>{{tag.name}}</li>
+        {%endfor%}
+    </ul>
+    <br>
+    Reviews:
+    <ul>
+        {%for review in reviews%}
+            <li>{{review.body}}</li>
+        {%endfor%}
+    </ul>
 
 {% endblock content %}
