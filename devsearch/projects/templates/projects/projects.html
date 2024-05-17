@@ -20,6 +20,8 @@
         <li>
             <a href=" {% url 'project' project.id %} ">{{project.title}}</a> <br>
             Description: {{project.description}} <br>
+            <a href=" {% url 'update-project' project.id %} ">:::EDIT:::</a> <br>
+            <a href=" {% url 'delete-project' project.id %} ">:::DELETE:::</a> <br>
         </li>
 
     {% endfor %}

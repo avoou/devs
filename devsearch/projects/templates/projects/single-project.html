@@ -20,5 +20,5 @@
             <li>{{review.body}}</li>
         {%endfor%}
     </ul>
-
+    <a href=" {% url 'update-project' specific_project.id %} ">:::EDIT:::</a> <br>
 {% endblock content %}
