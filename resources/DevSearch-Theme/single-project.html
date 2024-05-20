@@ -49,33 +49,11 @@
         <div class="column column--1of3">
           <h3 class="singleProject__subtitle">Tools & Stacks</h3>
           <div class="singleProject__toolStack">
-            <span class="tag tag--pill tag--sub tag--lg">
-              <small>Figma</small>
-            </span>
-            <span class="tag tag--pill tag--sub tag--lg">
-              <small>React Js</small>
-            </span>
-            <span class="tag tag--pill tag--sub tag--lg">
-              <small>REST API</small>
-            </span>
-            <span class="tag tag--pill tag--sub tag--lg">
-              <small>GraphQL</small>
-            </span>
-            <span class="tag tag--pill tag--sub tag--lg">
-              <small>TypeScript</small>
-            </span>
-            <span class="tag tag--pill tag--sub tag--lg">
-              <small>Webpack</small>
-            </span>
-            <span class="tag tag--pill tag--sub tag--lg">
-              <small>NextJS</small>
-            </span>
-            <span class="tag tag--pill tag--sub tag--lg">
-              <small>Postgres</small>
-            </span>
-            <span class="tag tag--pill tag--sub tag--lg">
-              <small>MongoDB</small>
-            </span>
+            {%for tag in project.tag.all%}
+                <span class="tag tag--pill tag--sub tag--lg">
+                    <small>{{tag.name}}</small>
+                </span>
+            {%endfor%}
           </div>
           <a class="singleProject__liveLink" href="#" target="_blank"><i class="im im-external-link"></i>Source Code
           </a>
