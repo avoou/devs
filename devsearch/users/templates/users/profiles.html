@@ -8,4 +8,11 @@
 
     <a href="{% url 'profiles' %}">LINK</a>
 
+    {% for profile in profiles %}
+        <h3>
+            {{profile.user}}
+        </h3>
+        <img height="50px" width="50px" src="{{ profile.profile_image.url }}" alt="">
+    {% endfor %}
+
 {% endblock content %}

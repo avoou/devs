@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import Profile
 import uuid
 
 
@@ -8,7 +9,7 @@ import uuid
 
 
 class Project(models.Model):
-    
+    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.SET_NULL)
     tag = models.ManyToManyField('Tag', blank=True)
     vote_total = models.IntegerField(default=0, null=True, blank=True)
     vote_ratio = models.IntegerField(default=0, null=True, blank=True)
