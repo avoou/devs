@@ -13,6 +13,7 @@ class Profile(models.Model):
     bio = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(upload_to='profiles/', default='default.png', null=True, blank=True)
     social_link = models.CharField(max_length=500, null=True, blank=True)
+    expierence = models.TextField(null=False, blank=True)
     id = models.UUIDField(
         default=uuid.uuid4, 
         unique=True, 
