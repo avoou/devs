@@ -64,6 +64,9 @@
           </div>
         </div>
         </div>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'delete-project' specific_project.id %}" class="singleProject__developer">DELETE PROJECT. FUCK IT!</a>
+        {% endif %}
       </main>
 
 {% endblock content %}
