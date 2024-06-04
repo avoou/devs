@@ -2,17 +2,39 @@
 
 {% block content %}
 
-<form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    <input type="text" name="username">
-    <input type="password" name="password">
-    <input type="submit" value="Login">
-</form>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
+{% if page == 'register' %}
+    <h1>{{page}}</h1>
+    <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Register">
+    </form>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <a href="{% url 'login' %}">Login</a>
+
+{% else %}
+    <h1>{{page}}</h1>
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type="submit" value="Login">
+    </form>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <p>Dont have an account yet <a href="{% url 'register' %}">Sign Up</a></p>
 {% endif %}
+
 {% endblock %}
