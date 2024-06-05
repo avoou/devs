@@ -3,31 +3,61 @@
 
 {% block content %}
 
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="alert alert--{{message.tags}}">
+    <p class="alert__message">{{message}}</p>
+    <button class="alert__close">⨯</button>
+  </div>
+
+{% endfor %}
+
+{% endif %}
+
 {% if page == 'register' %}
-    <h1>{{page}}</h1>
-    <form method="POST" action="{% url 'register' %}">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Register">
-    </form>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <a href="{% url 'login' %}">Login</a>
+    
+    <div class="auth">
+        <div class="card">
+          <div class="auth__header text-center">
+            <a href="/">
+              <img src="{% static 'images/icon.svg' %}" alt="icon" />
+            </a>
+            <h3>Account SignUp</h3>
+            <p>Create a new developer account</p>
+          </div>
+  
+          <form method="POST" action="{% url 'register' %}" class="form auth__form">
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="form__field">
+              <label for="formInput#text">{{field.label}}</label>
+              {{field}}
+              <!-- {% if field.help_text %}
+                {{field.help_text}}
+              {% endif %} -->
+              {% for error in field.errors %}
+              {{error}}
+                <p style="color: tomato;">{{error}}</p>
+              {% endfor %}
+            </div>
+  
+            {% endfor %}
+            <div class="auth__actions">
+              <input class="btn btn--sub btn--lg" type="submit" value="Sign  In" />
+            </div>
+          </form>
+          <div class="auth__alternative">
+            <p>Already have an Account?</p>
+            <a href="{% url 'login' %}">Log In</a>
+          </div>
+        </div>
+      </div>
+
 
 {% else %}
-    
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
     
     <div class="auth">
         <div class="card">
@@ -77,5 +107,15 @@
       </div>
 
 {% endif %}
+
+<!-- {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} -->
+
+
 
 {% endblock %}
