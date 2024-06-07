@@ -7,7 +7,7 @@ class Profile(models.Model):
     skills = models.ManyToManyField('Skills', blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True)
-    user_name = models.CharField(max_length=200, null=True, blank=True)
+    username = models.CharField(max_length=200, null=True, blank=True)
     email = models.EmailField(max_length=300, null=True, blank=True)
     short_intro = models.CharField(max_length=200, null=True, blank=True)
     bio = models.TextField(null=True, blank=True)

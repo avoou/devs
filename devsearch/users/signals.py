@@ -9,10 +9,22 @@ def createProfileReciever(sender, instance, created, **kwargs):
     if created:
         profile = Profile.objects.create(
             user=instance,
-            name=instance.username
+            username=instance.username,
+            name=instance.first_name,
+            email=instance.email
         )
         profile.save()
     
+
+def updateProfile(sender, instance, created, **kwargs):
+    user = instance.user
+
+    if not created:
+        user.first_name = instance.name
+        user.username = instance.username
+        user.email = instance.email
+        user.save()
+        print('user ', instance, ' was updated')
 
 
 def deletedProfile(sender, instance, **kwargs):
@@ -22,4 +34,5 @@ def deletedProfile(sender, instance, **kwargs):
 
 
 post_save.connect(createProfileReciever, sender=User)
+post_save.connect(updateProfile, sender=Profile)
 post_delete.connect(deletedProfile, sender=Profile)
