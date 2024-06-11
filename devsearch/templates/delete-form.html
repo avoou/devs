@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<p>You want to delete project: {{object.id}} ???</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes">
+</form>
+
+<button>
+    <a href="/">No</a>
+</button>
+
+{% endblock %}
