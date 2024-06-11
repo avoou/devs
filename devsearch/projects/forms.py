@@ -9,7 +9,10 @@ from django import forms
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        fields = '__all__'
+        #fields = '__all__'
+        project_fields = Project._meta.fields
+        fields = [field.name for field in project_fields if field.name not in ['id', 'owner', 'created']]
+        fields.append('tag')
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)

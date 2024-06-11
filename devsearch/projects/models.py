@@ -9,12 +9,12 @@ import uuid
 
 
 class Project(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(null=True, blank=True)
     owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.SET_NULL)
     tag = models.ManyToManyField('Tag', blank=True)
     vote_total = models.IntegerField(default=0, null=True, blank=True)
     vote_ratio = models.IntegerField(default=0, null=True, blank=True)
-    title = models.CharField(max_length=200)
-    description = models.TextField(null=True, blank=True)
     featured_image = models.ImageField(null=True, blank=True, default='default.png')
     demo_link = models.CharField(max_length=2000, null=True, blank=True)
     source_link = models.CharField(max_length=2000, null=True, blank=True)
@@ -64,3 +64,13 @@ class Tag(models.Model):
     def __str__(self) -> str:
         return self.name
     
+
+from django.db.models.signals import post_save, post_delete
+
+
+def saveProject(sender, instance, created, **kwargs):
+    print('in saveProject')
+    print('tags: ', instance.tag.all())
+
+
+post_save.connect(saveProject, sender=Project)
