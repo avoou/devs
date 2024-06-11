@@ -37,9 +37,9 @@ def create_project(request):
         if form.is_valid():
             project = form.save(commit=False)
             project.owner = profile
-            print('project.tag: ', project.tag.all())
-
+            #при наличии м2м отношений родитель сначала должен быть сохранен. отакот
             project.save()
+            form.save_m2m()
             return redirect('projects')
     context = {'form': form}
     return render(request, 'projects/project-form.html', context=context)
@@ -54,8 +54,6 @@ def update_project(request, id):
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
-            project = form.save(commit=False)
-            print('project.tag: ', project.tag.all())
             form.save()
             return redirect('projects')
     context = {'form': form}

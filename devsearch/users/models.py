@@ -4,7 +4,8 @@ import uuid
 
 
 class Profile(models.Model):
-    skills = models.ManyToManyField('Skills', blank=True)
+    #skills = models.ManyToManyField('Skills', blank=True)
+    #skills = models.ForeignKey('Skills', null=True, blank=True, on_delete=models.CASCADE)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True)
     username = models.CharField(max_length=200, null=True, blank=True)
@@ -27,7 +28,9 @@ class Profile(models.Model):
 
 
 class Skills(models.Model):
+    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=200, null=True, blank=True)
+    description = models.CharField(max_length=500, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(
         default=uuid.uuid4, 

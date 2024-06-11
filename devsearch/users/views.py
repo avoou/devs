@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
-from .forms import CustomUserCreationForm, ProfileForm
-from .models import Profile
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .models import Profile, Skills
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -96,3 +96,36 @@ def editAccount(request):
 
     context = {'form': form}
     return render(request, 'users/edit-profile-form.html', context=context)
+
+
+@login_required(login_url='login')
+def addSkill(request):
+    profile = request.user.profile
+    form = SkillForm()
+    if request.method == 'POST':
+        form = SkillForm(request.POST)
+        if form.is_valid():
+            skill = form.save()
+            #profile.skills.add(skill)
+            profile.skills_set.add(skill) 
+            profile.save()
+            return redirect('account')
+        
+    context = {'form': form}
+    return render(request, 'users/skill-form.html', context=context)
+
+
+@login_required(login_url='login')
+def updateSkill(request, id):
+    profile = request.user.profile
+    skill = profile.skills_set.get(id=id)
+    form = SkillForm(instance=skill)
+    if request.method == 'POST':
+        form = SkillForm(request.POST, instance=skill)
+        if form.is_valid():
+            form.save()
+
+            return redirect('account')
+        
+    context = {'form': form}
+    return render(request, 'users/skill-form.html', context=context)
