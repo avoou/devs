@@ -41,7 +41,7 @@
               
               <h3 class="devInfo__subtitle">Other Skills</h3>
               <div class="devInfo__otherSkills">
-                {% for skill in profile.skills.all %}
+                {% for skill in profile.skills_set.all %}
                 <span class="tag tag--pill tag--sub tag--lg">
                   <small>{{skill.name}}</small>
                 </span>
