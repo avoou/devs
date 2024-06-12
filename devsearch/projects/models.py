@@ -9,6 +9,8 @@ import uuid
 
 
 class Project(models.Model):
+    class Meta:
+        ordering = ['-created']
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.SET_NULL)

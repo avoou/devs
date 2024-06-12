@@ -3,15 +3,29 @@ from .models import Project, Tag
 from .forms import ProjectForm
 from django.contrib.auth.decorators import login_required
 from .utils import searchProjects
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def projects(request):
     projectObjs, search_query = searchProjects(request)
+    page = request.GET.get('page')
+    results = 3
+    paginator = Paginator(projectObjs, results)
+    try:  
+        projects = paginator.page(page)
+    except PageNotAnInteger:
+        page = 1
+    except EmptyPage:
+        page = paginator.num_pages
+    finally:
+        projects = paginator.page(page)
+
     context = {
         'project_name': 'PROJECT777',
         'age': 17,
-        'projectsList': projectObjs,
+        'projectsList': projects,
         'search_query': search_query,
+        'paginator': paginator,
     }
     return render(request, 'projects/projects.html', context=context)
 
