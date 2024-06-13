@@ -26,7 +26,7 @@ def custom_pagination(page, projectList, results_on_page):
         rightIndex = paginator.num_pages + 1
         
     if int(page) == paginator.num_pages:
-        leftIndex = int(page) - 2
+        leftIndex = int(page) - 1
     
     custom_range = range(leftIndex, rightIndex)
 

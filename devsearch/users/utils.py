@@ -3,16 +3,16 @@ from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
-def custom_pagination(page, projectList, results_on_page):
-    paginator = Paginator(projectList, results_on_page)
+def custom_pagination(page, profilesList, results_on_page):
+    paginator = Paginator(profilesList, results_on_page)
     try:  
-        projects = paginator.page(page)
+        profiles = paginator.page(page)
     except PageNotAnInteger:
         page = 1
     except EmptyPage:
         page = paginator.num_pages
     finally:
-        projects = paginator.page(page)
+        profiles = paginator.page(page)
     #print('page: ', page, 'hasprevious: ', projects.has_previous(), 'previous_page: ', projects.previous_page_number)
     
     leftIndex = int(page) - 1
@@ -26,11 +26,11 @@ def custom_pagination(page, projectList, results_on_page):
         rightIndex = paginator.num_pages + 1
         
     if int(page) == paginator.num_pages:
-        leftIndex = int(page) - 2
+        leftIndex = int(page) - 1
     
     custom_range = range(leftIndex, rightIndex)
 
-    return projects, custom_range
+    return profiles, custom_range
 
 
 def searchProfiles(request):

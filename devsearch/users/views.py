@@ -69,7 +69,7 @@ def getProfiles(request):
     profileObjs, search_query = searchProfiles(request)
     page = request.GET.get('page')
     results_on_page = 2
-    profiles, custom_range = custom_pagination(page=page, projectList=profileObjs, results_on_page=results_on_page)
+    profiles, custom_range = custom_pagination(page=page, profilesList=profileObjs, results_on_page=results_on_page)
     context = {
         'profiles': profiles, 
         'search_query': search_query,

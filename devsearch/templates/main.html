@@ -28,6 +28,25 @@
 
 </body>
 
-<script src="{% static 'uikit/app.js' %}"></script>
+<script type="text/javascript" src="{% static 'uikit/app.js' %}"></script>
+
+<script type="text/javascript">
+
+    let searchForm = document.getElementById("searchForm")
+    let page_links = document.getElementsByClassName("page-link")
+
+    if (searchForm) {
+        for(let i=0; page_links.length > i; i++) {
+            page_links[i].addEventListener('click', function (e) {
+                e.preventDefault()
+                let page = this.dataset.page
+                //console.log('page: ', page)
+                searchForm.innerHTML += `<input value=${page} name="page" hidden>`
+                searchForm.submit()
+            })
+        }
+    } 
+
+</script>
 
 </html>
