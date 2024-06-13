@@ -6,7 +6,7 @@ from .models import Profile, Skills
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .utils import searchProfiles
+from .utils import searchProfiles, custom_pagination
 
 
 def registerUser(request):
@@ -67,7 +67,14 @@ def loginUser(request):
 
 def getProfiles(request):
     profileObjs, search_query = searchProfiles(request)
-    context = {'profiles': profileObjs, 'search_query': search_query}
+    page = request.GET.get('page')
+    results_on_page = 2
+    profiles, custom_range = custom_pagination(page=page, projectList=profileObjs, results_on_page=results_on_page)
+    context = {
+        'profiles': profiles, 
+        'search_query': search_query,
+        'custom_range': custom_range,
+    }
     return render(request, 'users/profiles.html', context=context)
 
 

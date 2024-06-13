@@ -57,14 +57,7 @@
         </div>
       </div>
     </section>
-
-    <div class="pagination">
-      <ul class="container">
-        {% for page in paginator.page_range %}
-          <li><a href="?page={{page}}" class="btn">{{page}}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
+    {% include 'pagination.html' with queryset=projectsList custom_range=custom_range %}
   </main>
 
 {% endblock content %}
