@@ -28,6 +28,20 @@ class Project(models.Model):
         editable=False
     )
 
+
+    def updateVotesRatio(self):
+        reviews = self.review_set.all()
+        upVotes = reviews.filter(value='up').count()
+        totalVotes = reviews.count()
+
+        ratio = upVotes * 100 / totalVotes
+
+        self.vote_total = totalVotes
+        self.vote_ratio = ratio
+
+        self.save()
+
+
     def __str__(self) -> str:
         return self.title
     
@@ -37,6 +51,7 @@ class Review(models.Model):
         ('up', 'Up Vote'),
         ('down', 'Down Vote'),
     )
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     body = models.TextField(null=True, blank=True)
     value = models.CharField(max_length=200, choices=VOTE_TYPE)
@@ -47,6 +62,11 @@ class Review(models.Model):
         primary_key=True, 
         editable=False
     )
+
+
+    # class Meta:
+    #     unique_together = [['owner', 'project']]
+
 
     def __str__(self) -> str:
         return f'{self.project}|{self.created}|{self.value}' 

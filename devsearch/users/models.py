@@ -4,8 +4,6 @@ import uuid
 
 
 class Profile(models.Model):
-    #skills = models.ManyToManyField('Skills', blank=True)
-    #skills = models.ForeignKey('Skills', null=True, blank=True, on_delete=models.CASCADE)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True)
     username = models.CharField(max_length=200, null=True, blank=True)
