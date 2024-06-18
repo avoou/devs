@@ -33,17 +33,19 @@
                 <h5 class="project--rating">
                     {{specific_project.vote_ratio}}% Postitive Feedback ({{specific_project.vote_total}} Votes)
                 </h5>
-    
-                <form class="form" action="{% url 'project' specific_project.id %}" method="POST">
-                  {% csrf_token %}
-                  {% for field in form %}
-                  <div class="form__field">
-                    <label for="formInput#textarea">{{field.label}}</label>
-                    {{field}}
-                  </div>
-                  {% endfor %}
-                  <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
-                </form>
+                
+                {% if request.user.is_authenticated %}
+                  <form class="form" action="{% url 'project' specific_project.id %}" method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form__field">
+                      <label for="formInput#textarea">{{field.label}}</label>
+                      {{field}}
+                    </div>
+                    {% endfor %}
+                    <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
+                  </form>
+                {% endif %}
                 
                 <div class="commentList">
                 {%for review in reviews%}
