@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
 from .models import Profile, Skills
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .utils import searchProfiles, custom_pagination
+from .utils import searchProfiles, custom_pagination, getProfile
 
 
 def registerUser(request):
@@ -174,3 +174,27 @@ def message(request, id):
 
     context = {'message': message}
     return render(request, 'users/message.html', context=context)
+
+
+@login_required(login_url='login')
+def create_message(request, id):
+    sender_profile = request.user.profile
+    recipient_profile = getProfile(id)
+    print('sender_profile', sender_profile)
+    print('sender_profile', sender_profile.email)
+    #print('recipient_profile', recipient_profile)
+    form = MessageForm()
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = sender_profile
+            message.sender_name = sender_profile.name
+            message.recipient = recipient_profile
+            message.sender_email = sender_profile.email
+            message.save()
+
+        return redirect('user-profile', id=recipient_profile.id)
+
+    context = {'form': form}
+    return render(request, 'users/create-message.html', context=context)

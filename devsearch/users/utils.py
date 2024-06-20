@@ -47,3 +47,8 @@ def searchProfiles(request):
     )
 
     return profileObjs, search_query
+
+
+def getProfile(id: str) -> Profile:
+    profile = Profile.objects.get(id=id)
+    return profile
