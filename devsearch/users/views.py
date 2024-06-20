@@ -149,3 +149,28 @@ def deleteSkill(request, id):
         return redirect('account')
     context = {'object': skill}
     return render(request, 'delete-form.html', context=context)
+
+
+@login_required(login_url='login')
+def inbox(request):
+    profile = request.user.profile
+    recipient_messages = profile.messages.all()
+    unread_count = recipient_messages.filter(is_read=False).count()
+    context = {
+        'messages': recipient_messages,
+        'unread_count': unread_count,
+    }
+    return render(request, 'users/inbox.html', context=context)
+
+
+@login_required(login_url='login')
+def message(request, id):
+    profile = request.user.profile
+    message = profile.messages.get(id=id)
+    
+    if not message.is_read:
+        message.is_read = True
+        message.save()
+
+    context = {'message': message}
+    return render(request, 'users/message.html', context=context)
