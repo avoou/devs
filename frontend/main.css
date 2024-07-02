@@ -37,3 +37,12 @@ img {
 .vote--option:hover {
     color: blue;
 }
+
+#form-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 2em;
+    border: 1px solid seashell;
+    background-color: #fff;
+    border-radius: 5px;
+}
