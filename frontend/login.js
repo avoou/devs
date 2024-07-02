@@ -1,8 +1,9 @@
 
 
 let login_form = document.getElementById("login-form")
-addEventListener('submit', (e) => {
+login_form.addEventListener('submit', (e) => {
     e.preventDefault()
+    console.log('JHGKJHK')
     let login_info = {
         'username': login_form.username.value,
         'password': login_form.password.value
@@ -17,7 +18,11 @@ addEventListener('submit', (e) => {
     }).then(
         response => response.json()
     ).then(
-        data => console.log(data)
+        data => {
+            if (data.access) {
+                localStorage.setItem('access_token', data.access)
+            }
+        }
     )
 
 })
