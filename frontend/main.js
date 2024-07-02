@@ -1,5 +1,12 @@
 
 
+let logoutBtn = document.getElementById('logout-btn')
+logoutBtn.addEventListener('click', (e) => {
+    e.preventDefault()
+    localStorage.removeItem('access_token')
+    alert('You are not login now')
+})
+
 let projectsUrl = 'http://127.0.0.1:8000/api/projects/'
 
 let getProjects = () => {
@@ -12,6 +19,7 @@ let getProjects = () => {
 
 
 let createProjectsList = (projects) => {
+    let access_token = localStorage.getItem('access_token')
     let project_list_section = document.getElementById('projects--wrapper')
     project_list_section.innerHTML = ""
 
@@ -36,13 +44,12 @@ let createProjectsList = (projects) => {
         project_list_section.innerHTML += projectCard
     }
 
-    addVotesListeners()
+    addVotesListeners(access_token)
 
 }
 
-let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE5OTI2NjgxLCJpYXQiOjE3MTk5MjYzODEsImp0aSI6ImVmMDE2NzQyNjVmZjQ2ZTc5ZTM5MTY1ODY0NjhlYmRjIiwidXNlcl9pZCI6MX0.t4JjOAx1stmj4z2iefBS4mEZ9M0AOakIqgGRLRO4zIU"
 
-let addVotesListeners = () => {
+let addVotesListeners = (token) => {
     let voteElements = document.getElementsByClassName('vote--option')
 
     for (let i=0; voteElements.length > i; i++) {
@@ -54,7 +61,7 @@ let addVotesListeners = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${access_token}`
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     "review_value": vote
