@@ -4,7 +4,6 @@ from .models import Project, Review
 
 def saveProject(sender, instance, created, **kwargs):
     print('in saveProject')
-    print('tags: ', instance.tag.all())
 
 
 def updateProjectsVote(sender, instance, **kwargs):

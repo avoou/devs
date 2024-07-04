@@ -13,7 +13,7 @@ class Project(models.Model):
         ordering = ['-created']
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
     tag = models.ManyToManyField('Tag', blank=True)
     vote_total = models.IntegerField(default=0, null=True, blank=True)
     vote_ratio = models.IntegerField(default=0, null=True, blank=True)
@@ -27,6 +27,16 @@ class Project(models.Model):
         primary_key=True, 
         editable=False
     )
+
+
+    @property
+    def image_url(self):
+        try:
+            url = self.featured_image.url
+        except:
+            url = '/images/default.png'
+
+        return url
 
 
     def updateVotesRatio(self):
