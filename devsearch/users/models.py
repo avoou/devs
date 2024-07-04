@@ -21,6 +21,16 @@ class Profile(models.Model):
     )
 
 
+    @property
+    def image_url(self):
+        try:
+            url = self.profile_image.url
+        except:
+            url = '/images/default.png'
+
+        return url
+    
+
     def __str__(self) -> str:
         return str(self.user.username)
 
