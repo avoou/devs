@@ -18,8 +18,8 @@ def createProfileReciever(sender, instance, created, **kwargs):
         )
         profile.save()
 
-        subject = 'Devsearch'
-        message = 'Welcome to devsearch'
+        subject = 'devs'
+        message = 'Welcome to devs'
         send_mail(
             subject,
             message,
