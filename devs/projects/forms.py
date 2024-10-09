@@ -7,6 +7,8 @@ from .models import Project, Review
 from django import forms
 
 class ProjectForm(ModelForm):
+    """Form for edit/add project page"""
+
     class Meta:
         model = Project
         #fields = '__all__'
@@ -21,6 +23,8 @@ class ProjectForm(ModelForm):
 
 
 class ReviewForm(ModelForm):
+    """Form to write/send project review"""
+
     class Meta:
         model = Review
         fields = ['value', 'body']

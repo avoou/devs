@@ -4,6 +4,8 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def custom_pagination(page, projectList, results_on_page):
+    """Method deals with project count and a range in the bottom of page"""
+
     paginator = Paginator(projectList, results_on_page)
     try:  
         projects = paginator.page(page)
@@ -34,6 +36,7 @@ def custom_pagination(page, projectList, results_on_page):
 
 
 def searchProjects(request):
+    """Method deals with searching a specific project by title, owner etc"""
     search_query = ''
     if request.GET.get('query'):
         search_query = request.GET.get('query')

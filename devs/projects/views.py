@@ -7,6 +7,8 @@ from django.contrib import messages
 
 
 def projects(request):
+    """Get projects for one page"""
+
     projectObjs, search_query = searchProjects(request)
     page = request.GET.get('page')
     results_on_page = 4
@@ -23,6 +25,8 @@ def projects(request):
 
 
 def project(request, id):
+    """Get all info about specific project by id"""
+
     specific_project = Project.objects.get(id=id)
     tags = specific_project.tag.all()
     reviews = specific_project.review_set.all()
@@ -50,6 +54,8 @@ def project(request, id):
 
 @login_required(login_url='login')
 def create_project(request):
+    """View to create project"""
+
     profile = request.user.profile
     form = ProjectForm()
 
@@ -68,6 +74,8 @@ def create_project(request):
 
 @login_required(login_url='login')
 def update_project(request, id):
+    """View to update some info in project profile"""
+
     profile = request.user.profile
     project = profile.project_set.get(id=id)
     form = ProjectForm(instance=project)
@@ -83,6 +91,8 @@ def update_project(request, id):
 
 @login_required(login_url='login')
 def delete_project(request, id):
+    """View to delete specific project profile by id"""
+    
     profile = request.user.profile
     project = profile.project_set.get(id=id)
 

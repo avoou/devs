@@ -3,11 +3,11 @@ from .models import Project, Review
 
 
 def saveProject(sender, instance, created, **kwargs):
-    print('in saveProject')
+    pass
 
 
 def updateProjectsVote(sender, instance, **kwargs):
-    print('in updateProjectsVote')
+    """Signal which update project votes ratio when review has been created"""
     instance.project.updateVotesRatio()
 
 
