@@ -10,18 +10,17 @@ from .utils import searchProfiles, custom_pagination, getProfile
 
 
 def registerUser(request):
+    """View for register user"""
+
     page = 'register'
     form = CustomUserCreationForm()
     context = {'page': page, 'form': form}
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            print('usercreationform is valid')
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
-
-            messages.success(request, 'User has created')
 
             login(request, user)
             return redirect('edit-profile')
@@ -33,12 +32,16 @@ def registerUser(request):
 
 
 def logoutUser(request):
+    """View for logout"""
+
     logout(request)
     messages.success(request, "Sucssefully logout!)")
     return redirect('login')
 
 
 def loginUser(request):
+    """Login user already exist"""
+
     page = 'login'
     context = {'page': page}
     if request.user.is_authenticated:
@@ -66,6 +69,8 @@ def loginUser(request):
 
 
 def getProfiles(request):
+    """View to get list of user profiles"""
+
     profileObjs, search_query = searchProfiles(request)
     page = request.GET.get('page')
     results_on_page = 2
@@ -79,6 +84,8 @@ def getProfiles(request):
 
 
 def userProfile(request, id):
+    """View to get user profile by id"""
+
     profile = Profile.objects.get(id=id)
     context = {'profile': profile}
     return render(request, 'users/user-profile.html', context=context)
@@ -86,6 +93,8 @@ def userProfile(request, id):
 
 @login_required(login_url='login')
 def getUserAccount(request):
+    """View to get user account"""
+
     profile = request.user.profile
     projects = profile.project_set.all()
     context = {'profile': profile, 'projects': projects}
@@ -94,6 +103,8 @@ def getUserAccount(request):
 
 @login_required(login_url='login')
 def editAccount(request):
+    """View to edit user account"""
+
     profile = request.user.profile
     form = ProfileForm(instance=profile)
 
@@ -109,13 +120,14 @@ def editAccount(request):
 
 @login_required(login_url='login')
 def addSkill(request):
+    """View to add some skill to user profile"""
+
     profile = request.user.profile
     form = SkillForm()
     if request.method == 'POST':
         form = SkillForm(request.POST)
         if form.is_valid():
             skill = form.save()
-            #profile.skills.add(skill)
             profile.skills_set.add(skill) 
             profile.save()
             return redirect('account')
@@ -126,6 +138,8 @@ def addSkill(request):
 
 @login_required(login_url='login')
 def updateSkill(request, id):
+    """View to update a skill which already exist"""
+
     profile = request.user.profile
     skill = profile.skills_set.get(id=id)
     form = SkillForm(instance=skill)
@@ -142,6 +156,8 @@ def updateSkill(request, id):
 
 @login_required(login_url='login')
 def deleteSkill(request, id):
+    """View to delete some skill from profile"""
+
     profile = request.user.profile
     skill = profile.skills_set.get(id=id)
     if request.method == 'POST':
@@ -153,6 +169,8 @@ def deleteSkill(request, id):
 
 @login_required(login_url='login')
 def inbox(request):
+    """View to get list of inbox messages"""
+
     profile = request.user.profile
     recipient_messages = profile.messages.all()
     unread_count = recipient_messages.filter(is_read=False).count()
@@ -165,6 +183,7 @@ def inbox(request):
 
 @login_required(login_url='login')
 def message(request, id):
+    """View to read a message and udate status"""
     profile = request.user.profile
     message = profile.messages.get(id=id)
     
@@ -178,11 +197,10 @@ def message(request, id):
 
 @login_required(login_url='login')
 def create_message(request, id):
+    """View to send a message to somebody"""
+
     sender_profile = request.user.profile
     recipient_profile = getProfile(id)
-    print('sender_profile', sender_profile)
-    print('sender_profile', sender_profile.email)
-    #print('recipient_profile', recipient_profile)
     form = MessageForm()
     if request.method == 'POST':
         form = MessageForm(request.POST)

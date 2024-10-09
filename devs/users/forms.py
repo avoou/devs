@@ -5,6 +5,8 @@ from .models import Profile, Skills, Message
 
 
 class CustomUserCreationForm(UserCreationForm):
+    """Form for login page"""
+
     class Meta:
         model = User
         fields = ['username', 'first_name', 'email', 'password1', 'password2']
@@ -16,6 +18,8 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class ProfileForm(ModelForm):
+    """Form for edit profile page"""
+
     class Meta:
         model = Profile
         profile_fields = Profile._meta.fields
@@ -23,6 +27,8 @@ class ProfileForm(ModelForm):
 
 
 class SkillForm(ModelForm):
+    """Form for add skill to profile"""
+
     class Meta:
         model = Skills
         fields = '__all__'
@@ -36,6 +42,8 @@ class SkillForm(ModelForm):
 
 
 class MessageForm(ModelForm):
+    """Form to write and send a message"""
+    
     class Meta:
         model = Message
         fields = ['subject', 'body']

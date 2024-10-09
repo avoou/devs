@@ -6,9 +6,9 @@ from django.conf import settings
 
 
 def createProfileReciever(sender, instance, created, **kwargs):
-    print("sender ", sender)
-    print("instance ", instance)
-    print("created ", created)
+    """Signal that create a profile when the user has been created. 
+    Then message to email will send."""
+
     if created:
         profile = Profile.objects.create(
             user=instance,
@@ -30,6 +30,8 @@ def createProfileReciever(sender, instance, created, **kwargs):
     
 
 def updateProfile(sender, instance, created, **kwargs):
+    """Signal that update user info when profile has been edited"""
+
     user = instance.user
 
     if not created:
@@ -41,6 +43,8 @@ def updateProfile(sender, instance, created, **kwargs):
 
 
 def deletedProfile(sender, instance, **kwargs):
+    """Signal that delete user when profile has been deleted"""
+    
     try:
         user = instance.user
         user.delete()
