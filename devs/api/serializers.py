@@ -26,7 +26,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
     tag = TagSerializer(many=True)
     reviews = serializers.SerializerMethodField()
 
-
+    """Review is another model. To get all reviews:"""
     def get_reviews(self, project):
         reviews = project.review_set.all()
         serializer = ReviewSerializer(reviews, many=True)
