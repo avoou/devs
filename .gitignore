@@ -1,5 +1,5 @@
 devs/staticfiles/
-devs/static/
+# devs/static/
 resources/
 # Byte-compiled / optimized / DLL files
 __pycache__/
